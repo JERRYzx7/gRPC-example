@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  grpc-server:
+    build:
+      context: .  # 假設 Dockerfile 在專案根目錄
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"  # 映射 gRPC 服務端口
+    environment:
+      - JAVA_OPTS="-Xms512m -Xmx1024m"  # 可選的 JVM 設定
+    networks:
+      - grpc-network
+
+  envoy:
+    image: envoyproxy/envoy:v1.24-latest
+    ports:
+      - "8081:8081"  # Envoy 監聽端口
+      - "9901:9901"  # Envoy 管理端口
+    volumes:
+      - ../envoy/envoy.yaml:/etc/envoy/envoy.yaml  # 你的 Envoy 配置檔
+    networks:
+      - grpc-network
+
+networks:
+  grpc-network:
+    driver: bridge

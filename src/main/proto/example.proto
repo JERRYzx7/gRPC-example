@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+option java_multiple_files = false;
+option java_package="com.example.grpc";
+option java_outer_classname = "ExampleProto";
+
+message  ExampleRequest01 {
+  //編號會從1開始，
+  //有多種型別可以選
+    string name = 1;
+    string year = 2;
+}
+
+message ExampleResponse01 {
+    string message = 1;
+    string year = 2;
+}
+
+message  ExampleRequest02 {
+    repeated string name = 1;
+}
+
+message ExampleResponse02 {
+    string message = 1;
+}
+
+service ExampleService {
+    rpc Example01(ExampleRequest01) returns (ExampleResponse01); //simple  1 to 1
+    rpc Example02(ExampleRequest02) returns (ExampleResponse02); // simple 1 to many (req is a list)
+    rpc Client2Servers(ExampleRequest01) returns (stream ExampleResponse01); // client to servers
+    rpc Clients2Server(stream ExampleRequest01) returns (ExampleResponse01) {} // clients to server
+    rpc Clients2Servers(stream ExampleRequest01) returns (stream ExampleResponse01) {}
+}
