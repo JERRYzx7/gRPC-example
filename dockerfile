@@ -7,3 +7,4 @@ WORKDIR /app
 # 複製整個 target 目錄
 COPY target /app/target
 
+CMD ["java", "-jar", "target/gRPC-0.0.1-SNAPSHOT.jar"]
