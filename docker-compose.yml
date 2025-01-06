@@ -18,7 +18,7 @@ services:
       - "8081:8081"  # Envoy 監聽端口
       - "9901:9901"  # Envoy 管理端口
     volumes:
-      - ../envoy/envoy.yaml:/etc/envoy/envoy.yaml  # 你的 Envoy 配置檔
+      - ./envoy/envoy.yaml:/etc/envoy/envoy.yaml  # 你的 Envoy 配置檔
     networks:
       - grpc-network
 
